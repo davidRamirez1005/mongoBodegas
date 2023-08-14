@@ -1,6 +1,6 @@
 import { Expose, Transform } from 'class-transformer';
 import { IsDefined} from 'class-validator';
-export class Store {
+export class Product {
     @Expose({ name: 'id' })
     @IsDefined({message: ()=>{ throw {status: 422, message: `La id es obligatoria`}}})
     id: number;
@@ -9,16 +9,16 @@ export class Store {
     @IsDefined({message: ()=>{ throw {status: 422, message: `El nombre es obligatoria`}}})
     nombre: string;
 
-    @Expose({ name: 'id_responsable' })
-    @IsDefined({message: ()=>{ throw {status: 422, message: `El id_responsable es obligatoria`}}})
-    id_responsable: number;
+    @Expose({ name: 'descripcion' })
+    @Transform(({ value }) => { if(value) return value ; else "faker"})
+    descripcion: string;
 
     @Expose({ name: 'estado' })
     @IsDefined({message: ()=>{ throw {status: 422, message: `La estado es obligatoria`}}})
     estado: number;
 
     @Expose({ name: 'created_by' })
-    @Transform(({ value }) => { if(value) return value ; else 0})
+    @IsDefined({message: ()=>{ throw {status: 422, message: `La created_by es obligatoria`}}})
     created_by: number;
 
     @Expose({ name: 'update_by' })
@@ -37,11 +37,11 @@ export class Store {
     @Transform(({ value }) => { if(value) return value ; else "faker"})
     deleted_at: string;
 
-    constructor(data:Partial<Store>) {
+    constructor(data:Partial<Product>) {
         Object.assign(this, data);
         this.id = 0;
         this.nombre = "Faker";
-        this.id_responsable = 0;
         this.estado = 0;
+        this.created_by = 0;
     }
 }
