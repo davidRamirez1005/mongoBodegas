@@ -20,13 +20,13 @@ appBodega.get('/datos', limitget(),middlewareBodegaVerify, async(req, res) =>{
 
     let db = await con();
     let coleccion = db.collection('bodegas');
-    let result = await coleccion.aggregate(bodegas_ordenadas).toArray();
+    let result = await coleccion.find().sort({ nombre: 1 }).toArray();
     res.send(result)
 })
 /**
 * ! POST
 * ? agregar una nueva bodega
-* * http://127.0.0.3:5012/bodega/
+* * http://127.0.0.3:5012/bodega
 */
 appBodega.post('/', limitget(), middlewareBodegaVerify, appDTOData, async(req, res) => {
     if(!req.rateLimit) return;

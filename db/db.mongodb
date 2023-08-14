@@ -898,3 +898,9 @@ db.historiales.insertMany([
         updated_at: ISODate('2022-07-11')
     }
 ]);
+
+
+
+
+use("db_campus_bodegas");
+db.bodegas.find().sort({ nombre: 1 });
