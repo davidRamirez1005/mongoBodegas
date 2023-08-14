@@ -9,43 +9,43 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Expose, Transform } from 'class-transformer';
 import { IsDefined } from 'class-validator';
-export class Store {
+export class Product {
     constructor(data) {
         Object.assign(this, data);
         this.id = 0;
         this.nombre = "Faker";
-        this.id_responsable = 0;
         this.estado = 0;
+        this.created_by = 0;
     }
 }
 __decorate([
     Expose({ name: 'id' }),
     IsDefined({ message: () => { throw { status: 422, message: `La id es obligatoria` }; } }),
     __metadata("design:type", Number)
-], Store.prototype, "id", void 0);
+], Product.prototype, "id", void 0);
 __decorate([
     Expose({ name: 'nombre' }),
     IsDefined({ message: () => { throw { status: 422, message: `El nombre es obligatoria` }; } }),
     __metadata("design:type", String)
-], Store.prototype, "nombre", void 0);
+], Product.prototype, "nombre", void 0);
 __decorate([
-    Expose({ name: 'id_responsable' }),
-    IsDefined({ message: () => { throw { status: 422, message: `El id_responsable es obligatoria` }; } }),
-    __metadata("design:type", Number)
-], Store.prototype, "id_responsable", void 0);
+    Expose({ name: 'descripcion' }),
+    Transform(({ value }) => { if (value)
+        return value;
+    else
+        "faker"; }),
+    __metadata("design:type", String)
+], Product.prototype, "descripcion", void 0);
 __decorate([
     Expose({ name: 'estado' }),
     IsDefined({ message: () => { throw { status: 422, message: `La estado es obligatoria` }; } }),
     __metadata("design:type", Number)
-], Store.prototype, "estado", void 0);
+], Product.prototype, "estado", void 0);
 __decorate([
     Expose({ name: 'created_by' }),
-    Transform(({ value }) => { if (value)
-        return value;
-    else
-        0; }),
+    IsDefined({ message: () => { throw { status: 422, message: `La created_by es obligatoria` }; } }),
     __metadata("design:type", Number)
-], Store.prototype, "created_by", void 0);
+], Product.prototype, "created_by", void 0);
 __decorate([
     Expose({ name: 'update_by' }),
     Transform(({ value }) => { if (value)
@@ -53,7 +53,7 @@ __decorate([
     else
         0; }),
     __metadata("design:type", Number)
-], Store.prototype, "update_by", void 0);
+], Product.prototype, "update_by", void 0);
 __decorate([
     Expose({ name: 'created_at' }),
     Transform(({ value }) => { if (value)
@@ -61,7 +61,7 @@ __decorate([
     else
         "faker"; }),
     __metadata("design:type", String)
-], Store.prototype, "created_at", void 0);
+], Product.prototype, "created_at", void 0);
 __decorate([
     Expose({ name: 'updated_at' }),
     Transform(({ value }) => { if (value)
@@ -69,7 +69,7 @@ __decorate([
     else
         "faker"; }),
     __metadata("design:type", String)
-], Store.prototype, "updated_at", void 0);
+], Product.prototype, "updated_at", void 0);
 __decorate([
     Expose({ name: 'deleted_at' }),
     Transform(({ value }) => { if (value)
@@ -77,4 +77,4 @@ __decorate([
     else
         "faker"; }),
     __metadata("design:type", String)
-], Store.prototype, "deleted_at", void 0);
+], Product.prototype, "deleted_at", void 0);

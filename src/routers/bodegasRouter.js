@@ -3,7 +3,6 @@ import {Router} from 'express';
 import dotenv from 'dotenv';
 import {limitget} from '../helpers/configLimit.js'
 import {con} from '../../db/atlas.js'
-import { bodegas_ordenadas } from '../data/bodegaDataAccess.js';
 import { middlewareBodegaVerify, appDTOData } from '../middleware/bodega.js';
 
 dotenv.config();
@@ -15,12 +14,12 @@ const appBodega = Router();
  * ? listar todas las bodegas ordenadas
  * * http://127.0.0.3:5012/bodega/listar
  */
-appBodega.get('/datos', limitget(),middlewareBodegaVerify, async(req, res) =>{
+appBodega.get('/listar', limitget(),middlewareBodegaVerify, async(req, res) =>{
     if(!req.rateLimit) return;
 
     let db = await con();
     let coleccion = db.collection('bodegas');
-    let result = await coleccion.find().sort({ nombre: 1 }).toArray();
+    let result = await coleccion.find().sort({ nombre: 1 }).project({_id : 0}).toArray();
     res.send(result)
 })
 /**
