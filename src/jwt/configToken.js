@@ -4,6 +4,8 @@ import dotenv from 'dotenv';
 import {Router} from 'express';
 import { jwtVerify } from 'jose';
 import createJWT from './generateJwt.js';
+import { Store } from '../routers/storage/bodegas.js'
+import { Product } from '../routers/storage/productos.js'
 
 
 dotenv.config();
@@ -12,7 +14,8 @@ const appVerify = Router();
 
 const createInstance = (className) => {
   const classMap = {
-
+    'bodegas': Store,
+    'producto' : Product
   };
   const Class = classMap[className];
   return (Class) ? plainToClass(Class, {}, { ignoreDecorators: true }) : undefined;
