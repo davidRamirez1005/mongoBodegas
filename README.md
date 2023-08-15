@@ -6,7 +6,7 @@ GET -- `/token`
 
 seguido de la colección a la que desea generar el token:
 
-```
+```ini
 /token/bodegas
 /token/producto
 /token/traslado
@@ -16,7 +16,7 @@ seguido de la colección a la que desea generar el token:
 
 Usar el endpoint `/bodega`
 
-```
+```javascript
 appExpress.use('/bodega',limitget(),appVerify, appBodega)
 ```
 
@@ -25,7 +25,7 @@ appExpress.use('/bodega',limitget(),appVerify, appBodega)
 1. GET -- *listar todas las bodegas ordenadas*=> `/listar`: *http://127.0.0.3:5012/bodega/listar*
 2. POST -- agregar un nuevo cliente:
 
-```
+```json
 {
     "ID": 10,
     "Nombre": "Juan",
@@ -42,7 +42,7 @@ appExpress.use('/bodega',limitget(),appVerify, appBodega)
 
 Usar el endpoint `/producto`
 
-```
+```javascript
 appExpress.use('/producto',limitget(),appVerify, appProducto)
 ```
 
@@ -50,9 +50,9 @@ appExpress.use('/producto',limitget(),appVerify, appProducto)
 
 1. GET -- *Lista todos los productos en orden descendente por el campo "Total".*=> `/orden`: *http://127.0.0.3:5012/producto/orden*
 
-2. GET -- *Crea un nuevo producto y asigna una cantidad inicial en el inventario de una bodega por defecto => ej  http://127.0.0.3:5012/producto
+2. POST -- *Crea un nuevo producto y asigna una cantidad inicial en el inventario de una bodega por defecto => ej  http://127.0.0.3:5012/producto
 
-   ```
+   ```json
     {
      "id": 21,
      "nombre": "nombre producto",
@@ -63,16 +63,24 @@ appExpress.use('/producto',limitget(),appVerify, appProducto)
 
    
 
-#### => Gestión de **traslado**:
+#### => Gestión de **Inventario**:
 
-Usar el endpoint `/contrato`
+Usar el endpoint `/inventario`
 
+```javascript
+appExpress.use('/inventario',limitget(),appVerify, appInventario)
 ```
-appExpress.use('/contrato',limitget(),appVerify, appClientes)
-```
 
 
+1. POST -- *Inserta un registro en la tabla de inventarios, validando si la combinación de bodega y producto ya existe.*: *http://127.0.0.3:5012/inventario*
 
-1. GET -- *Listar todos los alquileres activos junto con los datos de los clientes relacionados.* => `/alquiler`: *http://127.0.0.3:5012/contrato/alquiler*
-
+   ```json
+   {
+       "id": 42,
+       "id_bodega": 9,
+       "id_producto": 19,
+       "cantidad": 231
+   }
+   ```
+   
    
