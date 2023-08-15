@@ -12,17 +12,11 @@ import { IsDefined } from 'class-validator';
 export class Product {
     constructor(data) {
         Object.assign(this, data);
-        this.id = 0;
         this.nombre = "Faker";
         this.estado = 0;
         this.created_by = 0;
     }
 }
-__decorate([
-    Expose({ name: 'id' }),
-    IsDefined({ message: () => { throw { status: 422, message: `La id es obligatoria` }; } }),
-    __metadata("design:type", Number)
-], Product.prototype, "id", void 0);
 __decorate([
     Expose({ name: 'nombre' }),
     IsDefined({ message: () => { throw { status: 422, message: `El nombre es obligatoria` }; } }),
