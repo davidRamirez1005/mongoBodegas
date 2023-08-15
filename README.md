@@ -27,13 +27,10 @@ appExpress.use('/bodega',limitget(),appVerify, appBodega)
 
 ```json
 {
-    "ID": 10,
-    "Nombre": "Juan",
-    "Apellido": "Perez",
-    "DNI": "111111111",
-    "Direccion": "calle 1 A",
-    "Telefono": "123654"
-  }
+    "nombre": "jose david",
+    "id_responsable": 5,
+    "estado": 1
+}
 ```
 
 
@@ -54,9 +51,8 @@ appExpress.use('/producto',limitget(),appVerify, appProducto)
 
    ```json
     {
-     "id": 21,
      "nombre": "nombre producto",
-      "estado": 1,
+     "estado": 1,
      "created_by": 16
    }
    ```
@@ -76,9 +72,8 @@ appExpress.use('/inventario',limitget(),appVerify, appInventario)
 
    ```json
    {
-       "id": 42,
        "id_bodega": 9,
-       "id_producto": 19,
+       "id_producto": 20,
        "cantidad": 231
    }
    ```
