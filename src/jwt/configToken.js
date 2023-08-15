@@ -15,7 +15,7 @@ const appVerify = Router();
 
 const createInstance = (className) => {
   const classMap = {
-    'bodegas': Store,
+    'bodega': Store,
     'producto' : Product,
     'inventario' : Inventory
   };
