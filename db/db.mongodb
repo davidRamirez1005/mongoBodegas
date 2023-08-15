@@ -9,9 +9,12 @@ db.createCollection("users", {
     validator: {
         $jsonSchema: {
             bsonType: 'object',
-            additionalProperties: true,
+            additionalProperties: false,
             required: ['id', 'nombre', 'email', 'estado','password'],
             properties: {
+                _id : {
+                    bsonType : 'objectId'
+                },
                 id: {
                     bsonType: "int",
                     description: 'La id es obligatoria y debe ser numérica'
@@ -141,9 +144,12 @@ db.createCollection("bodegas", {
     validator: {
         $jsonSchema: {
             bsonType: 'object',
-            additionalProperties: true,
+            additionalProperties: false,
             required: ['id', 'nombre', 'id_responsable', 'estado'],
             properties: {
+                _id : {
+                    bsonType : 'objectId'
+                },
                 id: {
                     bsonType: "int",
                     description: 'La id es obligatoria y debe ser numérica'
@@ -439,9 +445,12 @@ db.createCollection("productos", {
     validator: {
         $jsonSchema: {
             bsonType: 'object',
-            additionalProperties: true,
+            additionalProperties: false,
             required: ['id', 'nombre', 'estado', 'created_by'],
             properties: {
+                _id : {
+                    bsonType : 'objectId'
+                },
                 id: {
                     bsonType: "int",
                     description: 'La id es obligatoria y debe ser numérica'
@@ -573,9 +582,12 @@ db.createCollection("inventarios", {
     validator: {
         $jsonSchema: {
             bsonType: 'object',
-            additionalProperties: true,
+            additionalProperties: false,
             required: ['id', 'id_bodega', 'id_producto', 'cantidad'],
             properties: {
+                _id : {
+                    bsonType : 'objectId'
+                },
                 id: {
                     bsonType: "int",
                     description: 'La id es obligatoria y debe ser numérica'
@@ -591,34 +603,28 @@ db.createCollection("inventarios", {
                 cantidad: {
                     bsonType: 'int',
                     description: 'La cantidad es obligatoria'
+                },
+                created_by: {
+                    bsonType: 'int',
+                    description: 'El created_by es obligatorio'
+                },
+                update_by: {
+                    bsonType: 'int',
+                    description: 'El update_by es obligatorio'
+                },
+                created_at: {
+                    bsonType: 'date',
+                    description: 'El created_at no es obligatorio ni opcional pero se acepta el dato'
+                },
+                updated_at: {
+                    bsonType: 'date',
+                    description: 'El updated_at no es obligatorio ni opcional pero se acepta el dato'
+                },
+                deleted_at: {
+                    bsonType: 'date',
+                    description: 'El deleted_at no es obligatorio ni opcional pero se acepta el dato'
                 }
-            },
-            allOf: [
-                {
-                    properties: {
-                        created_by: {
-                            bsonType: 'int',
-                            description: 'El created_by es obligatorio'
-                        },
-                        update_by: {
-                            bsonType: 'int',
-                            description: 'El update_by es obligatorio'
-                        },
-                        created_at: {
-                            bsonType: 'date',
-                            description: 'El created_at no es obligatorio ni opcional pero se acepta el dato'
-                        },
-                        updated_at: {
-                            bsonType: 'date',
-                            description: 'El updated_at no es obligatorio ni opcional pero se acepta el dato'
-                        },
-                        deleted_at: {
-                            bsonType: 'date',
-                            description: 'El deleted_at no es obligatorio ni opcional pero se acepta el dato'
-                        }
-                    }
-                }
-            ]
+            }
         }
     }
 });
@@ -753,9 +759,12 @@ db.createCollection("historiales", {
     validator: {
         $jsonSchema: {
             bsonType: 'object',
-            additionalProperties: true,
+            additionalProperties: false,
             required: ['id', 'cantidad', 'id_bodega_origen', 'id_bodega_destino', 'id_inventario'],
             properties: {
+                _id : {
+                    bsonType : 'objectId'
+                },
                 id: {
                     bsonType: "int",
                     description: 'La id es obligatoria y debe ser numérica'
@@ -775,34 +784,28 @@ db.createCollection("historiales", {
                 id_inventario: {
                     bsonType: 'int',
                     description: 'El id_inventario es obligatorio'
+                },
+                created_by: {
+                    bsonType: 'int',
+                    description: 'El created_by es obligatorio'
+                },
+                update_by: {
+                    bsonType: 'int',
+                    description: 'El update_by es obligatorio'
+                },
+                created_at: {
+                    bsonType: 'date',
+                    description: 'El created_at no es obligatorio ni opcional pero se acepta el dato'
+                },
+                updated_at: {
+                    bsonType: 'date',
+                    description: 'El updated_at no es obligatorio ni opcional pero se acepta el dato'
+                },
+                deleted_at: {
+                    bsonType: 'date',
+                    description: 'El deleted_at no es obligatorio ni opcional pero se acepta el dato'
                 }
-            },
-            allOf: [
-                {
-                    properties: {
-                        created_by: {
-                            bsonType: 'int',
-                            description: 'El created_by es obligatorio'
-                        },
-                        update_by: {
-                            bsonType: 'int',
-                            description: 'El update_by es obligatorio'
-                        },
-                        created_at: {
-                            bsonType: 'date',
-                            description: 'El created_at no es obligatorio ni opcional pero se acepta el dato'
-                        },
-                        updated_at: {
-                            bsonType: 'date',
-                            description: 'El updated_at no es obligatorio ni opcional pero se acepta el dato'
-                        },
-                        deleted_at: {
-                            bsonType: 'date',
-                            description: 'El deleted_at no es obligatorio ni opcional pero se acepta el dato'
-                        }
-                    }
-                }
-            ]
+            }
         }
     }
 });
