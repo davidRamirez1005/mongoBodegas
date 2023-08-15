@@ -1,3 +1,21 @@
+use("db_campus_bodegas");
+db.createCollection("counters");
+db.counters.insertMany([
+    { _id: "usersId", sequence_value: 0 },
+    { _id: "bodegasId", sequence_value: 0 },
+    { _id: "productosId", sequence_value: 0 },
+    { _id: "inventariosId", sequence_value: 0 },
+    { _id: "historialesId", sequence_value: 0 }
+]);
+
+function siguienteId(coleccion) {
+    const sequenceDocument = db.counters.findOneAndUpdate(
+        { _id: `${coleccion}Id` },
+        { $inc: { sequence_value: 1 } },
+        { returnDocument: "after" }
+    );
+    return sequenceDocument.sequence_value;
+}
 /**
  * ! users
  */
@@ -10,14 +28,11 @@ db.createCollection("users", {
         $jsonSchema: {
             bsonType: 'object',
             additionalProperties: false,
-            required: ['id', 'nombre', 'email', 'estado','password'],
+            required: ['_id', 'nombre', 'email', 'estado','password'],
             properties: {
-                _id : {
-                    bsonType : 'objectId'
-                },
-                id: {
+                _id: {
                     bsonType: "int",
-                    description: 'La id es obligatoria y debe ser numérica'
+                    description: "ID del usuario"
                 },
                 nombre: {
                     bsonType: 'string',
@@ -63,70 +78,70 @@ db.createCollection("users", {
 use("db_campus_bodegas");
 db.users.insertMany([
     {
-        id: 11,
+        _id: Number(siguienteId("users")),
         nombre: 'juan0',
         email: 'juan0@hotmail.com',
         estado: 1,
         password: '12345'
     },
     {
-        id: 12,
+        _id: Number(siguienteId("users")),
         nombre: 'juan1',
         email: 'juan1@hotmail.com',
         estado: 1,
         password: '12345'
     },
     {
-        id: 13,
+        _id: Number(siguienteId("users")),
         nombre: 'juan2',
         email: 'juan2@hotmail.com',
         estado: 1,
         password: '12345'
     },
     {
-        id: 14,
+        _id: Number(siguienteId("users")),
         nombre: 'juan3',
         email: 'juan3@hotmail.com',
         estado: 1,
         password: '12345'
     },
     {
-        id: 15,
+        _id: Number(siguienteId("users")),
         nombre: 'juan4',
         email: 'juan4@hotmail.com',
         estado: 1,
         password: '12345'
     },
     {
-        id: 16,
+        _id: Number(siguienteId("users")),
         nombre: 'juan5',
         email: 'juan5@hotmail.com',
         estado: 1,
         password: '12345'
     },
     {
-        id: 17,
+        _id: Number(siguienteId("users")),
         nombre: 'juan6',
         email: 'juan6@hotmail.com',
         estado: 1,
         password: '12345'
     },
     {
-        id: 18,
+        _id: Number(siguienteId("users")),
         nombre: 'juan7',
         email: 'juan7@hotmail.com',
         estado: 1,
         password: '12345'
     },
     {
-        id: 19,
+        _id: Number(siguienteId("users")),
         nombre: 'juan8',
         email: 'juan8@hotmail.com',
         estado: 1,
         password: '12345'
     },
     {
-        id: 20,
+        _id: Number(siguienteId("users")),
         nombre: 'juan9',
         email: 'juan9@hotmail.com',
         estado: 1,
@@ -145,14 +160,11 @@ db.createCollection("bodegas", {
         $jsonSchema: {
             bsonType: 'object',
             additionalProperties: false,
-            required: ['id', 'nombre', 'id_responsable', 'estado'],
+            required: ['nombre', 'id_responsable', 'estado'],
             properties: {
-                _id : {
-                    bsonType : 'objectId'
-                },
-                id: {
+                _id: {
                     bsonType: "int",
-                    description: 'La id es obligatoria y debe ser numérica'
+                    description: "ID de bodegas"
                 },
                 nombre: {
                     bsonType: 'string',
@@ -194,7 +206,7 @@ db.createCollection("bodegas", {
 use("db_campus_bodegas");
 db.bodegas.insertMany([
     {
-        id: 11,
+        _id: Number(siguienteId("bodegas")),
         nombre: 'bodega0',
         id_responsable: 16,
         estado: 1,
@@ -202,7 +214,7 @@ db.bodegas.insertMany([
         created_at: ISODate('2022-06-02')
     },
     {
-        id: 12,
+        _id: Number(siguienteId("bodegas")),
         nombre: 'bodega1',
         id_responsable: 18,
         estado: 1,
@@ -210,7 +222,7 @@ db.bodegas.insertMany([
         created_at: ISODate('2022-06-02')
     },
     {
-        id: 13,
+        _id: Number(siguienteId("bodegas")),
         nombre: 'bodega2',
         id_responsable: 18,
         estado: 1,
@@ -218,7 +230,7 @@ db.bodegas.insertMany([
         created_at: ISODate('2022-06-02')
     },
     {
-        id: 18,
+        _id: Number(siguienteId("bodegas")),
         nombre: 'bodega7',
         id_responsable: 17,
         estado: 1,
@@ -226,7 +238,7 @@ db.bodegas.insertMany([
         created_at: ISODate('2022-06-02')
     },
     {
-        id: 19,
+        _id: Number(siguienteId("bodegas")),
         nombre: 'bodega8',
         id_responsable: 11,
         estado: 1,
@@ -234,7 +246,7 @@ db.bodegas.insertMany([
         created_at: ISODate('2022-06-02')
     },
     {
-        id: 20,
+        _id: Number(siguienteId("bodegas")),
         nombre: 'bodega9',
         id_responsable: 18,
         estado: 1,
@@ -242,7 +254,7 @@ db.bodegas.insertMany([
         created_at: ISODate('2022-06-02')
     },
     {
-        id: 22,
+        _id: Number(siguienteId("bodegas")),
         nombre: 'jsjsjss',
         id_responsable: 13,
         estado: 1,
@@ -250,7 +262,7 @@ db.bodegas.insertMany([
         updated_at: ISODate('2022-06-02')
     },
     {
-        id: 23,
+        _id: Number(siguienteId("bodegas")),
         nombre: 'leeche',
         id_responsable: 13,
         estado: 1,
@@ -258,7 +270,7 @@ db.bodegas.insertMany([
         updated_at: ISODate('2022-06-02')
     },
     {
-        id: 24,
+        _id: Number(siguienteId("bodegas")),
         nombre: 'soto1',
         id_responsable: 15,
         estado: 1,
@@ -266,7 +278,7 @@ db.bodegas.insertMany([
         updated_at: ISODate('2022-06-02')
     },
     {
-        id: 25,
+        _id: Number(siguienteId("bodegas")),
         nombre: 'soto2',
         id_responsable: 15,
         estado: 1,
@@ -274,7 +286,7 @@ db.bodegas.insertMany([
         updated_at: ISODate('2022-06-02')
     },
     {
-        id: 26,
+        _id: Number(siguienteId("bodegas")),
         nombre: 'prueba',
         id_responsable: 12,
         estado: 1,
@@ -282,7 +294,7 @@ db.bodegas.insertMany([
         updated_at: ISODate('2022-06-02')
     },
     {
-        id: 27,
+        _id: Number(siguienteId("bodegas")),
         nombre: 'fsfdf',
         id_responsable: 13,
         estado: 1,
@@ -290,7 +302,7 @@ db.bodegas.insertMany([
         updated_at: ISODate('2022-06-02')
     },
     {
-        id: 28,
+        _id: Number(siguienteId("bodegas")),
         nombre: 'prueba',
         id_responsable: 12,
         estado: 1,
@@ -298,7 +310,7 @@ db.bodegas.insertMany([
         updated_at: ISODate('2022-06-03')
     },
     {
-        id: 29,
+        _id: Number(siguienteId("bodegas")),
         nombre: 'bodegajuanpablo',
         id_responsable: 19,
         estado: 1,
@@ -306,7 +318,7 @@ db.bodegas.insertMany([
         updated_at: ISODate('2022-06-03')
     },
     {
-        id: 30,
+        _id: Number(siguienteId("bodegas")),
         nombre: 'micasa',
         id_responsable: 18,
         estado: 1,
@@ -314,7 +326,7 @@ db.bodegas.insertMany([
         updated_at: ISODate('2022-06-03')
     },
     {
-        id: 31,
+        _id: Number(siguienteId("bodegas")),
         nombre: 'casamedrano',
         id_responsable: 17,
         estado: 1,
@@ -322,7 +334,7 @@ db.bodegas.insertMany([
         updated_at: ISODate('2022-06-03')
     },
     {
-        id: 32,
+        _id: Number(siguienteId("bodegas")),
         nombre: 'centro',
         id_responsable: 18,
         estado: 1,
@@ -330,7 +342,7 @@ db.bodegas.insertMany([
         updated_at: ISODate('2022-06-03')
     },
     {
-        id: 35,
+        _id: Number(siguienteId("bodegas")),
         nombre: 'bodega35',
         id_responsable: 11,
         estado: 1,
@@ -338,7 +350,7 @@ db.bodegas.insertMany([
         updated_at: ISODate('2022-06-24')
     },
     {
-        id: 36,
+        _id: Number(siguienteId("bodegas")),
         nombre: 'asdefg',
         id_responsable: 11,
         estado: 1,
@@ -346,7 +358,7 @@ db.bodegas.insertMany([
         updated_at: ISODate('2022-06-29')
     },
     {
-        id: 37,
+        _id: Number(siguienteId("bodegas")),
         nombre: 'bodega fg',
         id_responsable: 11,
         estado: 1,
@@ -354,7 +366,7 @@ db.bodegas.insertMany([
         updated_at: ISODate('2022-06-29')
     },
     {
-        id: 38,
+        _id: Number(siguienteId("bodegas")),
         nombre: 'bodega fg',
         id_responsable: 11,
         estado: 1,
@@ -362,7 +374,7 @@ db.bodegas.insertMany([
         updated_at: ISODate('2022-06-29')
     },
     {
-        id: 39,
+        _id: Number(siguienteId("bodegas")),
         nombre: 'bodega fg 2',
         id_responsable: 11,
         estado: 1,
@@ -370,7 +382,7 @@ db.bodegas.insertMany([
         updated_at: ISODate('2022-06-29')
     },
     {
-        id: 40,
+        _id: Number(siguienteId("bodegas")),
         nombre: 'bodega fg 2',
         id_responsable: 11,
         estado: 1,
@@ -378,7 +390,7 @@ db.bodegas.insertMany([
         updated_at: ISODate('2022-06-29')
     },
     {
-        id: 41,
+        _id: Number(siguienteId("bodegas")),
         nombre: 'Bodega 13.2',
         id_responsable: 11,
         estado: 1,
@@ -386,7 +398,7 @@ db.bodegas.insertMany([
         updated_at: ISODate('2022-07-01')
     },
     {
-        id: 42,
+        _id: Number(siguienteId("bodegas")),
         nombre: 'Bodega Developer 13.2',
         id_responsable: 11,
         estado: 1,
@@ -394,7 +406,7 @@ db.bodegas.insertMany([
         updated_at: ISODate('2022-07-01')
     },
     {
-        id: 43,
+        _id: Number(siguienteId("bodegas")),
         nombre: 'Bodega Developer 13.2',
         id_responsable: 11,
         estado: 1,
@@ -402,7 +414,7 @@ db.bodegas.insertMany([
         updated_at: ISODate('2022-07-11')
     },
     {
-        id: 44,
+        _id: Number(siguienteId("bodegas")),
         nombre: 'Bodega 59',
         id_responsable: 11,
         estado: 1,
@@ -410,7 +422,7 @@ db.bodegas.insertMany([
         updated_at: ISODate('2022-07-11')
     },
     {
-        id: 48,
+        _id: Number(siguienteId("bodegas")),
         nombre: 'Bodega Anderson Atuesta',
         id_responsable: 11,
         estado: 11,
@@ -418,7 +430,7 @@ db.bodegas.insertMany([
         updated_at: ISODate('2022-07-21')
     },
     {
-        id: 49,
+        _id: Number(siguienteId("bodegas")),
         nombre: 'Bodega Anderson Atuesta555',
         id_responsable: 11,
         estado: 11,
@@ -426,7 +438,7 @@ db.bodegas.insertMany([
         updated_at: ISODate('2022-07-21')
     },
     {
-        id: 50,
+        _id: Number(siguienteId("bodegas")),
         nombre: 'A Bodega',
         id_responsable: 11,
         estado: 1,
@@ -446,14 +458,11 @@ db.createCollection("productos", {
         $jsonSchema: {
             bsonType: 'object',
             additionalProperties: false,
-            required: ['id', 'nombre', 'estado', 'created_by'],
+            required: ['_id', 'nombre', 'estado', 'created_by'],
             properties: {
-                _id : {
-                    bsonType : 'objectId'
-                },
-                id: {
+                _id: {
                     bsonType: "int",
-                    description: 'La id es obligatoria y debe ser numérica'
+                    description: "ID del productos"
                 },
                 nombre: {
                     bsonType: 'string',
@@ -501,70 +510,70 @@ db.createCollection("productos", {
 use("db_campus_bodegas");
 db.productos.insertMany([
     {
-        id: 11,
+        _id: Number(siguienteId("productos")),
         nombre: 'producto0',
         descripcion: 'producto0',
         estado: 1,
         created_by: 16
     },
     {
-        id: 12,
+        _id: Number(siguienteId("productos")),
         nombre: 'producto1',
         descripcion: 'producto1',
         estado: 1,
         created_by: 14
     },
     {
-        id: 13,
+        _id: Number(siguienteId("productos")),
         nombre: 'producto2',
         descripcion: 'producto2',
         estado: 1,
         created_by: 13
     },
     {
-        id: 14,
+        _id: Number(siguienteId("productos")),
         nombre: 'producto3',
         descripcion: 'producto3',
         estado: 1,
         created_by: 20
     },
     {
-        id: 15,
+        _id: Number(siguienteId("productos")),
         nombre: 'producto4',
         descripcion: 'producto4',
         estado: 1,
         created_by: 19
     },
     {
-        id: 16,
+        _id: Number(siguienteId("productos")),
         nombre: 'producto5',
         descripcion: 'producto5',
         estado: 1,
         created_by: 11
     },
     {
-        id: 17,
+        _id: Number(siguienteId("productos")),
         nombre: 'producto6',
         descripcion: 'producto6',
         estado: 1,
         created_by: 12
     },
     {
-        id: 18,
+        _id: Number(siguienteId("productos")),
         nombre: 'producto7',
         descripcion: 'producto7',
         estado: 1,
         created_by: 11
     },
     {
-        id: 19,
+        _id: Number(siguienteId("productos")),
         nombre: 'producto8',
         descripcion: 'producto8',
         estado: 1,
         created_by: 11
     },
     {
-        id: 20,
+        _id: Number(siguienteId("productos")),
         nombre: 'producto9',
         descripcion: 'producto9',
         estado: 1,
@@ -583,14 +592,11 @@ db.createCollection("inventarios", {
         $jsonSchema: {
             bsonType: 'object',
             additionalProperties: false,
-            required: ['id', 'id_bodega', 'id_producto', 'cantidad'],
+            required: ['_id', 'id_bodega', 'id_producto', 'cantidad'],
             properties: {
-                _id : {
-                    bsonType : 'objectId'
-                },
-                id: {
+                _id: {
                     bsonType: "int",
-                    description: 'La id es obligatoria y debe ser numérica'
+                    description: "ID del inventarios"
                 },
                 id_bodega: {
                     bsonType: 'int',
@@ -632,7 +638,7 @@ db.createCollection("inventarios", {
 use("db_campus_bodegas");
 db.inventarios.insertMany([
     {
-        id: 12,
+        _id: Number(siguienteId("inventarios")),
         id_bodega: 12,
         id_producto: 18,
         cantidad: 103,
@@ -640,35 +646,35 @@ db.inventarios.insertMany([
         created_at: ISODate('2023-05-26')
     },
     {
-        id: 13,
+        _id: Number(siguienteId("inventarios")),
         id_bodega: 19,
         id_producto: 18,
         cantidad: 220,
         created_by: 19
     },
     {
-        id: 14,
+        _id: Number(siguienteId("inventarios")),
         id_bodega: 20,
         id_producto: 13,
         cantidad: 13,
         created_by: 14
     },
     {
-        id: 18,
+        _id: Number(siguienteId("inventarios")),
         id_bodega: 19,
         id_producto: 14,
         cantidad: 7,
         created_by: 15
     },
     {
-        id: 20,
+        _id: Number(siguienteId("inventarios")),
         id_bodega: 12,
         id_producto: 27,
         cantidad: 9,
         created_by: 16
     },
     {
-        id: 25,
+        _id: Number(siguienteId("inventarios")),
         id_bodega: 19,
         id_producto: 23,
         cantidad: 45666,
@@ -676,7 +682,7 @@ db.inventarios.insertMany([
         updated_at: ISODate('2022-06-03')
     },
     {
-        id: 27,
+        _id: Number(siguienteId("inventarios")),
         id_bodega: 26,
         id_producto: 24,
         cantidad: 45000,
@@ -684,7 +690,7 @@ db.inventarios.insertMany([
         updated_at: ISODate('2022-06-03')
     },
     {
-        id: 29,
+        _id: Number(siguienteId("inventarios")),
         id_bodega: 26,
         id_producto: 25,
         cantidad: 45666,
@@ -692,7 +698,7 @@ db.inventarios.insertMany([
         updated_at: ISODate('2022-06-03')
     },
     {
-        id: 31,
+        _id: Number(siguienteId("inventarios")),
         id_bodega: 26,
         id_producto: 26,
         cantidad: 6000,
@@ -700,7 +706,7 @@ db.inventarios.insertMany([
         updated_at: ISODate('2022-06-03')
     },
     {
-        id: 32,
+        _id: Number(siguienteId("inventarios")),
         id_bodega: 28,
         id_producto: 27,
         cantidad: 89700,
@@ -708,7 +714,7 @@ db.inventarios.insertMany([
         updated_at: ISODate('2022-06-03')
     },
     {
-        id: 33,
+        _id: Number(siguienteId("inventarios")),
         id_bodega: 23,
         id_producto: 28,
         cantidad: 9999,
@@ -716,7 +722,7 @@ db.inventarios.insertMany([
         updated_at: ISODate('2022-06-03')
     },
     {
-        id: 34,
+        _id: Number(siguienteId("inventarios")),
         id_bodega: 18,
         id_producto: 18,
         cantidad: 7898,
@@ -724,7 +730,7 @@ db.inventarios.insertMany([
         updated_at: ISODate('2022-06-03')
     },
     {
-        id: 35,
+        _id: Number(siguienteId("inventarios")),
         id_bodega: 18,
         id_producto: 27,
         cantidad: 55281,
@@ -732,7 +738,7 @@ db.inventarios.insertMany([
         updated_at: ISODate('2022-06-03')
     },
     {
-        id: 36,
+        _id: Number(siguienteId("inventarios")),
         id_bodega: 29,
         id_producto: 29,
         cantidad: 5993,
@@ -740,7 +746,7 @@ db.inventarios.insertMany([
         updated_at: ISODate('2022-06-03')
     },
     {
-        id: 37,
+        _id: Number(siguienteId("inventarios")),
         id_bodega: 29,
         id_producto: 27,
         cantidad: 5005,
@@ -760,14 +766,11 @@ db.createCollection("historiales", {
         $jsonSchema: {
             bsonType: 'object',
             additionalProperties: false,
-            required: ['id', 'cantidad', 'id_bodega_origen', 'id_bodega_destino', 'id_inventario'],
+            required: ['_id', 'cantidad', 'id_bodega_origen', 'id_bodega_destino', 'id_inventario'],
             properties: {
-                _id : {
-                    bsonType : 'objectId'
-                },
-                id: {
+                _id: {
                     bsonType: "int",
-                    description: 'La id es obligatoria y debe ser numérica'
+                    description: "ID de historiales"
                 },
                 cantidad: {
                     bsonType: 'int',
@@ -813,7 +816,7 @@ db.createCollection("historiales", {
 use("db_campus_bodegas");
 db.historiales.insertMany([
     {
-        id: 18,
+        _id: Number(siguienteId("historiales")),
         cantidad: 7,
         id_bodega_origen: 12,
         id_bodega_destino: 18,
@@ -821,7 +824,7 @@ db.historiales.insertMany([
         created_by: 18
     },
     {
-        id: 20,
+        _id: Number(siguienteId("historiales")),
         cantidad: 9,
         id_bodega_origen: 11,
         id_bodega_destino: 12,
@@ -829,7 +832,7 @@ db.historiales.insertMany([
         created_by: 15
     },
     {
-        id: 21,
+        _id: Number(siguienteId("historiales")),
         cantidad: 7,
         id_bodega_origen: 29,
         id_bodega_destino: 30,
@@ -838,7 +841,7 @@ db.historiales.insertMany([
         updated_at: ISODate('2022-06-03')
     },
     {
-        id: 22,
+        _id: Number(siguienteId("historiales")),
         cantidad: 666,
         id_bodega_origen: 26,
         id_bodega_destino: 24,
@@ -847,7 +850,7 @@ db.historiales.insertMany([
         updated_at: ISODate('2022-06-03')
     },
     {
-        id: 23,
+        _id: Number(siguienteId("historiales")),
         cantidad: 100,
         id_bodega_origen: 19,
         id_bodega_destino: 18,
@@ -856,7 +859,7 @@ db.historiales.insertMany([
         updated_at: ISODate('2022-06-03')
     },
     {
-        id: 24,
+        _id: Number(siguienteId("historiales")),
         cantidad: 25,
         id_bodega_origen: 19,
         id_bodega_destino: 26,
@@ -865,7 +868,7 @@ db.historiales.insertMany([
         updated_at: ISODate('2022-06-03')
     },
     {
-        id: 25,
+        _id: Number(siguienteId("historiales")),
         cantidad: 25,
         id_bodega_origen: 19,
         id_bodega_destino: 26,
@@ -874,7 +877,7 @@ db.historiales.insertMany([
         updated_at: ISODate('2022-06-03')
     },
     {
-        id: 26,
+        _id: Number(siguienteId("historiales")),
         cantidad: 300,
         id_bodega_origen: 18,
         id_bodega_destino: 12,
@@ -883,7 +886,7 @@ db.historiales.insertMany([
         updated_at: ISODate('2022-06-03')
     },
     {
-        id: 27,
+        _id: Number(siguienteId("historiales")),
         cantidad: 300,
         id_bodega_origen: 18,
         id_bodega_destino: 12,
@@ -892,7 +895,7 @@ db.historiales.insertMany([
         updated_at: ISODate('2022-06-03')
     },
     {
-        id: 28,
+        _id: Number(siguienteId("historiales")),
         cantidad: 1,
         id_bodega_origen: 12,
         id_bodega_destino: 11,
@@ -901,47 +904,3 @@ db.historiales.insertMany([
         updated_at: ISODate('2022-07-11')
     }
 ]);
-
-
-
-
-use("db_campus_bodegas");
-db.bodegas.find().sort({ nombre: 1 });
-
-// Lista todos los productos en orden descendente por el campo "Total".
-use("db_campus_bodegas");
-db.inventarios.aggregate([
-{
-    $group: {
-    _id: "$id_producto",
-    Total: { $sum: "$cantidad" }
-    }
-},
-{
-    $lookup: {
-    from: "productos",
-    localField: "_id",
-    foreignField: "id",
-    as: "producto_relacionado"
-    }
-},
-{
-    $unwind: "$producto_relacionado"
-},
-{
-    $project: {
-    _id: 0,
-    "producto_relacionado._id": 0,
-    created_at: 0,
-    created_by: 0,
-    updated_at: 0
-    }
-},
-{
-    $sort: { Total: -1 }
-}
-]);
-
-
-
-
