@@ -1,9 +1,6 @@
 import { Expose, Transform } from 'class-transformer';
 import { IsDefined} from 'class-validator';
 export class Inventory {
-    @Expose({ name: 'id' })
-    @IsDefined({message: ()=>{ throw {status: 422, message: `La id es obligatoria`}}})
-    id: number;
 
     @Expose({ name: 'id_bodega' })
     @IsDefined({message: ()=>{ throw {status: 422, message: `El id_bodega es obligatoria`}}})
@@ -39,7 +36,6 @@ export class Inventory {
 
     constructor(data:Partial<Inventory>) {
         Object.assign(this, data);
-        this.id = 0;
         this.id_bodega = 0;
         this.id_producto = 0;
         this.cantidad = 0;
