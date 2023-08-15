@@ -1,9 +1,8 @@
-// import {ObjectId} from 'mongodb'
 import {Router} from 'express';
 import dotenv from 'dotenv';
-import {limitget} from '../helpers/configLimit.js'
 import {con} from '../../db/atlas.js'
 import { middlewareBodegaVerify, appDTOData } from '../middleware/bodega.js';
+import siguienteId from '../helpers/siguienteId.js';
 
 dotenv.config();
 
@@ -14,7 +13,7 @@ const appBodega = Router();
  * ? listar todas las bodegas ordenadas
  * * http://127.0.0.3:5012/bodega/listar
  */
-appBodega.get('/listar', limitget(),middlewareBodegaVerify, async(req, res) =>{
+appBodega.get('/listar', middlewareBodegaVerify, async(req, res) =>{
     if(!req.rateLimit) return;
 
     let db = await con();
@@ -22,26 +21,38 @@ appBodega.get('/listar', limitget(),middlewareBodegaVerify, async(req, res) =>{
     let result = await coleccion.find().sort({ nombre: 1 }).project({_id : 0}).toArray();
     res.send(result)
 })
+// let {cc:CC, nombre:NOMBRE} = json;
+// let json2 = {};
+// Object.assign(json2, {CC, NOMBRE});
+
 /**
 * ! POST
 * ? agregar una nueva bodega
 * * http://127.0.0.3:5012/bodega
 */
-appBodega.post('/', limitget(), middlewareBodegaVerify, appDTOData, async(req, res) => {
-    if(!req.rateLimit) return;
+appBodega.post('/', middlewareBodegaVerify, appDTOData, async (req, res) => {
+    if (!req.rateLimit) return;
 
-    let db = await con();
-    let coleccion = db.collection('bodegas');
     try {
-        let result = await coleccion.insertOne(req.body);
+        const newId = await siguienteId( "bodegas");
+
+        let db = await con();
+        let coleccion = db.collection('bodegas');
+        
+        const newDocument = {
+            _id: newId,
+            ...req.body
+        };
+        let result = await coleccion.insertOne(newDocument);
         console.log(result);
-        res.status(201).send({status : 201, message : 'documento creado con exito'})
+        res.status(201).send({ status: 201, message: 'documento creado con exito' });
     } catch (error) {
-        console.log(error.errInfo.details.schemaRulesNotSatisfied[0]);
-        res.status(406).send('no se ha podido crear el documento')
-    };
-    
-})
+        console.log(error);
+        res.status(406).send('no se ha podido crear el documento');
+    }
+});
+
+
 
 
 export default appBodega;

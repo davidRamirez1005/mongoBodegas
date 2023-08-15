@@ -1,9 +1,8 @@
-// import {ObjectId} from 'mongodb'
 import {Router} from 'express';
 import dotenv from 'dotenv';
-import {limitget} from '../helpers/configLimit.js'
 import {con} from '../../db/atlas.js'
 import { middlewareInventariosVerify, appDTOData } from '../middleware/inventario.js';
+import siguienteId from '../helpers/siguienteId.js';
 
 dotenv.config();
 
@@ -13,12 +12,6 @@ const appInventario = Router();
 /**
 * ! POST
 * ? Inserta un registro en la tabla de inventarios, validando si la combinación de bodega y producto ya existe.
-{
-    "id": 42,
-    "id_bodega": 9,
-    "id_producto": 19,
-    "cantidad": 231
-}
 * * http://127.0.0.3:5012/inventario
 */
 // Middleware de verificación de combinación de bodega y producto
@@ -42,20 +35,26 @@ async function verificar(req, res, next) {
         res.status(500).json({ message: 'Error en el servidor.' });
     }
 }
-
 // Ruta para insertar un registro en la tabla de inventarios
 appInventario.post('/',verificar, middlewareInventariosVerify, appDTOData, async (req, res) => {
-    try {
-        const db = await con();
-        const coleccion = db.collection('inventarios');
-        
-        const result = await coleccion.insertOne(req.body);
-        console.log(result);
+    if (!req.rateLimit) return;
 
-        res.status(201).json({ status: 201, message: 'Documento creado con éxito.' });
+    try {
+        const newId = await siguienteId( "inventarios");
+
+        let db = await con();
+        let coleccion = db.collection('inventarios');
+        
+        const newDocument = {
+            _id: newId,
+            ...req.body
+        };
+        let result = await coleccion.insertOne(newDocument);
+        console.log(result);
+        res.status(201).send({ status: 201, message: 'documento creado con exito' });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Error en el servidor.' });
+        console.log(error);
+        res.status(406).send('no se ha podido crear el documento');
     }
 });
 
